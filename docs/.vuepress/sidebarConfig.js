@@ -14,6 +14,7 @@ module.exports = {
         ['/frontend/vuepress/', '快速搭建'],
         ['/frontend/vuepress/注意事项', '注意事项'],
         ['/frontend/vuepress/markdown详解', 'markdown 详解'],
+        ['/frontend/vuepress/部署上线', '部署上线'],
       ],
     },
   ],
