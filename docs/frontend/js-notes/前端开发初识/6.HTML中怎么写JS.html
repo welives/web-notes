@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script>
+      //嵌入式的写法，直接放在上面，获取不到ID；
+      // let oBtn2 = document.getElementById('btn2')
+      // console.log(oBtn2)
+
+      // 等DOM加载完成后再获取
+      window.onload = function() {
+        let oBtn2 = document.getElementById('btn2')
+        console.log(oBtn2)
+      }
+    </script>
+  </head>
+  <body>
+    <!--JS行内写法: JS直接写在标签上-->
+    <div>这是一段信息;<a href="javascript:;">这是百度的连接</a></div>
+    <input type="button" value="click me 1" onclick="alert('这是行内的写法')" />
+    <br />
+    <!--JS嵌入式写法: JS写在script标签内-->
+    <input type="button" value="click me 2" id="btn1" />
+    <br />
+    <br />
+    <br />
+    <input type="button" value="click me 3" id="btn2" />
+    <br />
+    <img src="https://ss0.bdstatic.com/5aV1bjqh_Q23odCf/static/superman/img/logo/bd_logo1_31bdc765.png" alt="" />
+    <script>
+      //嵌入式的写法
+      let oBtn1 = document.getElementById('btn1')
+      oBtn1.onclick = function() {
+        alert('这是嵌入式写法')
+      }
+    </script>
+    <!--JS外联式写法-->
+    <script src="./js/btn.js"></script>
+  </body>
+</html>
