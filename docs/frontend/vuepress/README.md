@@ -51,6 +51,16 @@ yarn docs:dev
 npm run docs:dev
 ```
 
+7. 本地开发模式，编译代码时浏览器自动更新
+
+```json
+{
+  "scripts": {
+    "docs:dev": "vuepress dev docs --temp .temp"
+  }
+}
+```
+
 ## 目录结构
 
 VuePress 遵循 “约定优于配置” 的原则，推荐的目录结构如下：

@@ -27,6 +27,7 @@ module.exports = {
         ['/frontend/css-notes/等分', '等分'],
         ['/frontend/css-notes/水平居中', '水平居中'],
         ['/frontend/css-notes/垂直居中', '垂直居中'],
+        ['/frontend/css-notes/优惠卷demo', '优惠卷demo'],
       ],
     },
   ],
