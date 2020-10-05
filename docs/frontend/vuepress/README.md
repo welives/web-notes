@@ -98,8 +98,6 @@ VuePress 遵循 “约定优于配置” 的原则，推荐的目录结构如下
 module.exports = {
   title: '前端开发笔记', // 设置网站标题
   description: '煎蛋的博客', // 设置网站的描述
-  base: '/', // 设置站点根路径
-  dest: '/dist', // 设置输出目录
   head: [
     ['link', { ref: 'icon', href: '/img/favicon.ico' }], //自定义的 favicon
     ['meta', { name: 'viewport', content: 'width=device-width,initial-scale=1,user-scalable=no' }], //移动端优化
@@ -123,14 +121,20 @@ module.exports = [
   { text: '指南', link: '/guide/' },
   {
     text: '前端相关',
-    link: '/frontend/',
     items: [
-      { text: 'vuepress入门', link: '/frontend/vuepress/' },
-      { text: 'HTML', link: '/frontend/html/' },
+      { text: '前端学习路线', link: '/guide/前端学习路线' },
+      { text: 'CSS学习笔记', link: '/frontend/css-notes/' },
+      { text: 'JS学习笔记', link: '/frontend/js-notes/前端开发初识' },
     ],
   },
   { text: '后端相关', link: '/backend/' },
-  { text: 'Github', link: 'https://github.com/welives' },
+  {
+    text: 'Github',
+    items: [
+      { text: 'Github', link: 'https://github.com/welives' },
+      { text: 'Gitee', link: 'https://gitee.com/welives' },
+    ],
+  },
 ]
 ```
 
