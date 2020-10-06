@@ -26,7 +26,7 @@ __proto__: Object
 
 `Boolean`对象在实际使用中，用处并不大
 
-因为 boolean 数据就是用来判断真假的，而 Boolean 对象是做为对象来用的，**任何非空对象转换的时候，都是 true**
+因为`boolean`数据就是用来判断真假的，而`Boolean`对象是做为对象来用的，**任何非空对象转换的时候，都是 true**
 
 ```js
 var falseObject = new Boolean(false)
@@ -42,4 +42,4 @@ console.log(falseObject instanceof Boolean) //true
 console.log(falseValue instanceof Boolean) //false
 ```
 
-理解基本类型的布尔值与 Boolean 对象之间的区别非常重要。当然，**我们的建议是永远不要使用 Boolean 对象**
+理解基本类型的布尔值与`Boolean`对象之间的区别非常重要，当然，**我们的建议是永远不要使用`Boolean`对象**

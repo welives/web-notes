@@ -25,13 +25,13 @@ console.log(date.getMilliseconds()) // 获取毫秒
 console.log(date.getTime()) // 获取时间戳, 毫秒级
 ```
 
-其中 get 对应的有 set；比如有`getMinutes`就会有`setMinutes`；如果传入的值超过 59 就会增加小时数
+其中`get`对应的有`set`，比如有`getMinutes`就会有`setMinutes`。如果传入的值超过 59 就会增加小时数
 
-set 相关的方法，只需要把 get 改为 set 就可以了；参数传入需要设置的对应值
+`set`相关的方法，只需要把`get`改为`set`就可以了，参数传入需要设置的对应值
 
 如果是`getUTCMinutes`则获取 UTC 日期中的分钟数
 
-有一个特殊的事件组件方法；`getTimezoneOffset()`返回本地时间与 UTC 时间相差的分钟数
+有一个特殊的事件组件方法，`getTimezoneOffset()`返回本地时间与 UTC 时间相差的分钟数
 
 ```js
 var testDate = new Date()
@@ -55,7 +55,7 @@ console.log('getYear', testDate.getYear()) //getYear 120
 console.log('getFullYear', testDate.getFullYear()) //getFullYear 2020
 ```
 
-原因是`getYear`返回的是 **当前年份-1900** 的值（即年份基数是 1900）；`getFullYear()`直接获取 2020-10-02T14:05:20.530Z 中当前的年份
+原因是`getYear`返回的是 **当前年份-1900** 的值（即年份基数是 1900）。`getFullYear()`直接获取 2020-10-02T14:05:20.530Z 中当前的年份
 
 使用 js 来获取年份，都是使用：`getFullYear()`因为这个直接就达到我们的目的了
 
