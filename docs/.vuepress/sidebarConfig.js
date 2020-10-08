@@ -24,9 +24,13 @@ module.exports = {
       collapsable: false,
       children: [
         ['/frontend/css-notes/', '目录'],
+        ['/frontend/css-notes/CSS属性', 'CSS属性'],
+        ['/frontend/css-notes/伪元素', '伪元素'],
+        ['/frontend/css-notes/伪类', '伪类'],
         ['/frontend/css-notes/等分', '等分布局'],
         ['/frontend/css-notes/水平居中', '水平居中'],
         ['/frontend/css-notes/垂直居中', '垂直居中'],
+        ['/frontend/css-notes/Overflow', 'Overflow相关'],
         ['/frontend/css-notes/Hover', 'Hover相关'],
         ['/frontend/css-notes/Border', 'Border相关'],
         ['/frontend/css-notes/其他demo', '其他demo'],
