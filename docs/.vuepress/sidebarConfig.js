@@ -59,6 +59,7 @@ module.exports = {
         ['/frontend/js-notes/研究Date对象', '研究Date对象'],
         ['/frontend/js-notes/研究Global对象', '研究Global对象'],
         ['/frontend/js-notes/研究RegExp对象', '研究RegExp对象'],
+        ['/frontend/js-notes/一些demo', '一些demo'],
       ],
     },
   ],

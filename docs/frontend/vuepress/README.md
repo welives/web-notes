@@ -100,6 +100,7 @@ module.exports = {
   description: '煎蛋的博客', // 设置网站的描述
   head: [
     ['link', { ref: 'icon', href: '/img/favicon.ico' }], //自定义的 favicon
+    ['script', { src: 'https://cdn.bootcdn.net/ajax/libs/jquery/1.10.0/jquery.min.js' }], // 引入jQuery，写demo的时候需要用到
     ['meta', { name: 'viewport', content: 'width=device-width,initial-scale=1,user-scalable=no' }], //移动端优化
   ],
   // 主题
