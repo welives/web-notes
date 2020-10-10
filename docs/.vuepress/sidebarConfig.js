@@ -63,4 +63,31 @@ module.exports = {
       ],
     },
   ],
+  '/frontend/uni-app': [
+    {
+      title: 'uni-app学习笔记',
+      collapsable: false,
+      children: [
+        ['/frontend/uni-app/', '创建项目'],
+        ['/frontend/uni-app/尺寸单位', '尺寸单位'],
+        ['/frontend/uni-app/生命周期', '生命周期'],
+        ['/frontend/uni-app/vue和nvue', 'vue和nvue'],
+        ['/frontend/uni-app/疑难杂症', '疑难杂症'],
+      ],
+    },
+  ],
+  '/backend/eggjs': [
+    {
+      title: 'eggjs学习笔记',
+      collapsable: false,
+      children: [
+        ['/backend/eggjs/', '快速入门'],
+        ['/backend/eggjs/路由', '路由'],
+        ['/backend/eggjs/控制器', '控制器'],
+        ['/backend/eggjs/数据库', '数据库'],
+        ['/backend/eggjs/模型', '模型'],
+        ['/backend/eggjs/常用插件', '常用插件'],
+      ],
+    },
+  ],
 }

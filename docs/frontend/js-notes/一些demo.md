@@ -129,7 +129,6 @@
   }
   ul.list-jquery li {
     height: 30px;
-    text-indent: 15px;
     font-size: 12px;
     line-height: 30px;
     list-style: none;
@@ -198,7 +197,6 @@
   }
   ul.list-jquery li {
     height: 30px;
-    text-indent: 15px;
     font-size: 12px;
     line-height: 30px;
     list-style: none;
