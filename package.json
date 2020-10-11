@@ -10,10 +10,11 @@
     "vuepress": "^1.6.0"
   },
   "devDependencies": {
-    "@vuepress/plugin-back-to-top": "^1.6.0"
+    "@vuepress/plugin-back-to-top": "^1.6.0",
+    "watchpack": "^2.0.0"
   },
   "scripts": {
-    "dev": "vuepress dev docs --temp .temp",
+    "dev": "vuepress dev docs --cache .cache",
     "build": "vuepress build docs",
     "deploy": "bash deploy.sh"
   },

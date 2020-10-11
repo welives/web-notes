@@ -3,7 +3,7 @@ deploy.sh
 node_modules/
 unpackage/
 dist/
-.temp/
+.cache/
 package-lock.json
 .editorconfig
 .eslintrc

@@ -380,3 +380,385 @@
 ```
 
 :::
+
+## 表格排序
+
+### 原生 js 实现方式
+
+<div class="table-wrap">
+  <table id="table">
+    <thead>
+      <tr>
+        <th class="w30"><input type="checkbox" /></th>
+        <th class="w100">姓名</th>
+        <th class="w70">年龄</th>
+        <th class="w200">邮箱</th>
+        <th class="w200">手机</th>
+        <th class="w100">工资</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+<style>
+  .table-wrap {
+    width: 700px;
+    margin: 20px auto 0;
+    padding: 5px;
+    border: 1px solid #e2e2e2;
+    border-radius: 5px;
+  }
+  .table-wrap thead tr,
+  .table-wrap tbody tr {
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    user-select: none;
+  }
+  .table-wrap thead {
+    height: 30px;
+    color: #fff;
+    background-color: #3eaf7c;
+    cursor: pointer;
+  }
+  .table-wrap tbody tr:nth-child(odd) {
+    background-color: #ccc;
+  }
+  .w30 {
+    width: 30px;
+  }
+  .w70 {
+    width: 70px;
+  }
+  .w100 {
+    width: 100px;
+  }
+  .w200 {
+    width: 200px;
+  }
+  .hover-color {
+    background-color: #cde074 !important;
+  }
+</style>
+<script>
+  var tableData = [
+    {
+      name: '用户-1',
+      age: 25,
+      email: '1234567890@qq.com',
+      phone: '13245637823',
+      score: 1340,
+    },
+    {
+      name: '用户-2',
+      age: 23,
+      email: '4123456780@qq.com',
+      phone: '18723456423',
+      score: 1200,
+    },
+    {
+      name: '用户-3',
+      age: 32,
+      email: '4123456890@qq.com',
+      phone: '13800026574',
+      score: 1800,
+    },
+    {
+      name: '用户-4',
+      age: 41,
+      email: '5234567890@qq.com',
+      phone: '13800993302',
+      score: 1034,
+    },
+  ]
+  var oTable = document.querySelector('#table'),
+    oBody = oTable.tBodies[0],
+    oRows = oBody.rows || [],
+    oThs = document.querySelectorAll('#table th'),
+    oChk = document.querySelector('#table input')
+  var tables = {
+    sort: 'asc',
+    // 渲染表格
+    render() {
+      let str = ''
+      tableData &&
+        tableData.length > 0 &&
+        tableData.forEach((item, index) => {
+          str += '<tr><td><input type="checkbox" /></td>'
+          for (const key in tableData[index]) {
+            if (tableData[index].hasOwnProperty(key)) {
+              str += `<td>${tableData[index][key]}</td>`
+            }
+          }
+          str += '</tr>'
+        })
+      oBody.innerHTML = str
+      this.changeColor()
+      this.selectAll(0)
+    },
+    // 鼠标悬停时改变行的颜色
+    changeColor() {
+      for (const oRow of oRows) {
+        oRow.oldClass = this.className || ''
+        oRow.onmouseover = function(e) {
+          this.className = 'hover-color'
+        }
+        oRow.onmouseout = function(e) {
+          this.className = this.oldClass
+        }
+      }
+    },
+    // 表格排序
+    sortRows(i) {
+      let oRowsArr = Array.from(oRows)
+      // 给所有行对应的数组进行排序
+      oRowsArr.sort((a, b) => {
+        let as = a.cells[i].innerHTML
+        let bs = b.cells[i].innerHTML
+        if (isNaN(as)) {
+          return as.localeCompare(bs)
+        } else {
+          return as - bs
+        }
+      })
+      // 实现升降序处理
+      if (this.sort === 'asc') {
+        oRowsArr.reverse()
+        this.sort = 'desc'
+      } else {
+        this.sort = 'asc'
+      }
+      // 按照最新的顺序，把我们的每一行重新的添加到页面中
+      let domFrg = document.createDocumentFragment()
+      oRowsArr.forEach((row) => {
+        domFrg.appendChild(row)
+      })
+      oBody.appendChild(domFrg)
+    },
+    // 全选||取消全选
+    selectAll(flag) {
+      let oChks = document.querySelectorAll('#table input')
+      Array.from(oChks).forEach((chk, i) => {
+        chk.checked = flag
+        // 给每一行添加点击事件
+        i !== 0 &&
+          (chk.onclick = function() {
+            !this.checked ? (oChk.checked = false) : void 0
+            let tempFlag = true
+            for (let j = 1; j < oChks.length; j++) {
+              // 只要有任何一个取消选中,则跳出循环
+              if (!oChks[j].checked) {
+                tempFlag = false
+                break
+              }
+            }
+            tempFlag && (oChk.checked = true)
+          })
+      })
+    },
+  }
+  tables.render()
+  for (let i = 0; i < oThs.length; i++) {
+    // 给表头添加点击事件
+    i !== 0 &&
+      (oThs[i].onclick = () => {
+        tables.sortRows(i)
+      })
+  }
+    console.log(oChk)
+  oChk.onclick = function() {
+    this.checked ? tables.selectAll(true) : tables.selectAll(false)
+  }
+</script>
+
+::: details 查看代码
+
+```html
+<div class="table-wrap">
+  <table id="table">
+    <thead>
+      <tr>
+        <th class="w30"><input type="checkbox" /></th>
+        <th class="w100">姓名</th>
+        <th class="w70">年龄</th>
+        <th class="w200">邮箱</th>
+        <th class="w200">手机</th>
+        <th class="w100">工资</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+<style>
+  .table-wrap {
+    width: 700px;
+    margin: 20px auto 0;
+    padding: 5px;
+    border: 1px solid #e2e2e2;
+    border-radius: 5px;
+  }
+  .table-wrap thead tr,
+  .table-wrap tbody tr {
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    user-select: none;
+  }
+  .table-wrap thead {
+    height: 30px;
+    color: #fff;
+    background-color: #3eaf7c;
+    cursor: pointer;
+  }
+  .table-wrap tbody tr:nth-child(odd) {
+    background-color: #ccc;
+  }
+  .w30 {
+    width: 30px;
+  }
+  .w70 {
+    width: 70px;
+  }
+  .w100 {
+    width: 100px;
+  }
+  .w200 {
+    width: 200px;
+  }
+  .hover-color {
+    background-color: #cde074 !important;
+  }
+</style>
+<script>
+  var tableData = [
+    {
+      name: '用户-1',
+      age: 25,
+      email: '1234567890@qq.com',
+      phone: '13245637823',
+      score: 1340,
+    },
+    {
+      name: '用户-2',
+      age: 23,
+      email: '4123456780@qq.com',
+      phone: '18723456423',
+      score: 1200,
+    },
+    {
+      name: '用户-3',
+      age: 32,
+      email: '4123456890@qq.com',
+      phone: '13800026574',
+      score: 1800,
+    },
+    {
+      name: '用户-4',
+      age: 41,
+      email: '5234567890@qq.com',
+      phone: '13800993302',
+      score: 1034,
+    },
+  ]
+  var oTable = document.querySelector('#table'),
+    oBody = oTable.tBodies[0],
+    oRows = oBody.rows || [],
+    oThs = document.querySelectorAll('#table th'),
+    oChk = document.querySelector('#table input')
+  var tables = {
+    sort: 'asc',
+    // 渲染表格
+    render() {
+      let str = ''
+      tableData &&
+        tableData.length > 0 &&
+        tableData.forEach((item, index) => {
+          str += '<tr><td><input type="checkbox" /></td>'
+          for (const key in tableData[index]) {
+            if (tableData[index].hasOwnProperty(key)) {
+              str += `<td>${tableData[index][key]}</td>`
+            }
+          }
+          str += '</tr>'
+        })
+      oBody.innerHTML = str
+      this.changeColor()
+      this.selectAll(0)
+    },
+    // 鼠标悬停时改变行的颜色
+    changeColor() {
+      for (const oRow of oRows) {
+        oRow.oldClass = this.className || ''
+        oRow.onmouseover = function(e) {
+          this.className = 'hover-color'
+        }
+        oRow.onmouseout = function(e) {
+          this.className = this.oldClass
+        }
+      }
+    },
+    // 表格排序
+    sortRows(i) {
+      let oRowsArr = Array.from(oRows)
+      // 给所有行对应的数组进行排序
+      oRowsArr.sort((a, b) => {
+        let as = a.cells[i].innerHTML
+        let bs = b.cells[i].innerHTML
+        if (isNaN(as)) {
+          return as.localeCompare(bs)
+        } else {
+          return as - bs
+        }
+      })
+      // 实现升降序处理
+      if (this.sort === 'asc') {
+        oRowsArr.reverse()
+        this.sort = 'desc'
+      } else {
+        this.sort = 'asc'
+      }
+      // 按照最新的顺序，把我们的每一行重新的添加到页面中
+      let domFrg = document.createDocumentFragment()
+      oRowsArr.forEach((row) => {
+        domFrg.appendChild(row)
+      })
+      oBody.appendChild(domFrg)
+    },
+    // 全选||取消全选
+    selectAll(flag) {
+      let oChks = document.querySelectorAll('#table input')
+      Array.from(oChks).forEach((chk, i) => {
+        chk.checked = flag
+        // 给每一行添加点击事件
+        i !== 0 &&
+          (chk.onclick = function() {
+            !this.checked ? (oChk.checked = false) : void 0
+            let tempFlag = true
+            for (let j = 1; j < oChks.length; j++) {
+              // 只要有任何一个取消选中,则跳出循环
+              if (!oChks[j].checked) {
+                tempFlag = false
+                break
+              }
+            }
+            tempFlag && (oChk.checked = true)
+          })
+      })
+    },
+  }
+  tables.render()
+  for (let i = 0; i < oThs.length; i++) {
+    // 给表头添加点击事件
+    i !== 0 &&
+      (oThs[i].onclick = () => {
+        tables.sortRows(i)
+      })
+  }
+  console.log(oChk)
+  oChk.onclick = function() {
+    this.checked ? tables.selectAll(true) : tables.selectAll(false)
+  }
+</script>
+```
+
+:::
