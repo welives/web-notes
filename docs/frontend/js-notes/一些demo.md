@@ -254,7 +254,7 @@
 
 ::: details 查看代码
 
-```html
+```vue
 <template>
   <div>
     <div class="marquee">
@@ -280,102 +280,102 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        timer: null,
-        animate: false,
-        marqueeList: [
-          {
-            name: '开心果',
-            city: '北京',
-            amount: '320',
-          },
-          {
-            name: '芒果干',
-            city: '上海',
-            amount: '470',
-          },
-          {
-            name: '草莓干',
-            city: '广州',
-            amount: '970',
-          },
-          {
-            name: '无核白葡萄干 ',
-            city: '重庆',
-            amount: '10',
-          },
-        ],
-      }
+export default {
+  data() {
+    return {
+      timer: null,
+      animate: false,
+      marqueeList: [
+        {
+          name: '开心果',
+          city: '北京',
+          amount: '320',
+        },
+        {
+          name: '芒果干',
+          city: '上海',
+          amount: '470',
+        },
+        {
+          name: '草莓干',
+          city: '广州',
+          amount: '970',
+        },
+        {
+          name: '无核白葡萄干 ',
+          city: '重庆',
+          amount: '10',
+        },
+      ],
+    }
+  },
+  created() {
+    this.autoAni()
+  },
+  methods: {
+    showMarquee() {
+      this.animate = true
+      setTimeout(() => {
+        this.marqueeList.push(this.marqueeList[0])
+        this.marqueeList.shift()
+        this.animate = false
+      }, 1000)
     },
-    created() {
-      this.autoAni()
+    autoAni() {
+      this.timer = setInterval(this.showMarquee, 2000)
     },
-    methods: {
-      showMarquee: function() {
-        this.animate = true
-        setTimeout(() => {
-          this.marqueeList.push(this.marqueeList[0])
-          this.marqueeList.shift()
-          this.animate = false
-        }, 1000)
-      },
-      autoAni() {
-        this.timer = setInterval(this.showMarquee, 2000)
-      },
-      stopAni() {
-        clearInterval(this.timer)
-      },
+    stopAni() {
+      clearInterval(this.timer)
     },
-  }
+  },
+}
 </script>
 
 <style scoped>
-  * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  .marquee {
-    width: 100%;
-    height: 50px;
-    align-items: center;
-    color: #3a3a3a;
-    background-color: #ffe4ca;
-    display: flex;
-    box-sizing: border-box;
-  }
-  .marquee_box {
-    display: block;
-    position: relative;
-    width: 60%;
-    height: 30px;
-    overflow: hidden;
-  }
-  .marquee_list {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    cursor: pointer;
-  }
-  .marquee_top {
-    transition: all 1s;
-    margin-top: -30px;
-  }
-  .marquee_list li {
-    height: 30px;
-    line-height: 30px;
-    font-size: 14px;
-    padding-left: 20px;
-  }
-  .marquee_list li span {
-    padding: 0 2px;
-  }
-  .red {
-    color: #ff0101;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.marquee {
+  width: 100%;
+  height: 50px;
+  align-items: center;
+  color: #3a3a3a;
+  background-color: #ffe4ca;
+  display: flex;
+  box-sizing: border-box;
+}
+.marquee_box {
+  display: block;
+  position: relative;
+  width: 60%;
+  height: 30px;
+  overflow: hidden;
+}
+.marquee_list {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+.marquee_top {
+  transition: all 1s;
+  margin-top: -30px;
+}
+.marquee_list li {
+  height: 30px;
+  line-height: 30px;
+  font-size: 14px;
+  padding-left: 20px;
+}
+.marquee_list li span {
+  padding: 0 2px;
+}
+.red {
+  color: #ff0101;
+}
 </style>
 ```
 
@@ -385,8 +385,10 @@
 
 ### 原生 js 实现方式
 
+- 页面刷新后 demo 中的表格数据会失效的问题并不是 bug，而是 vuepress 在编译打包时会把`.md`文件中的 js 代码的特殊字符给转义了。反正你把下面给出的代码 cv 到 html 文件中去运行是不会有任何问题的
+
 <div class="table-wrap">
-  <table id="table">
+  <table id="table-original">
     <thead>
       <tr>
         <th class="w30"><input type="checkbox" /></th>
@@ -471,18 +473,18 @@
       score: 1034,
     },
   ]
-  var oTable = document.querySelector('#table'),
+  var oTable = document.querySelector('#table-original'),
     oBody = oTable.tBodies[0],
     oRows = oBody.rows || [],
-    oThs = document.querySelectorAll('#table th'),
-    oChk = document.querySelector('#table input')
+    oThs = document.querySelectorAll('#table-original th'),
+    oChk = document.querySelector('#table-original input')
   var tables = {
     sort: 'asc',
     // 渲染表格
     render() {
       let str = ''
-      if (tableData && tableData.length > 0) {
-        tableData.forEach((item, index) => {
+      if (tableData && tableData.length) {
+        tableData.forEach(function(item, index) {
           str += '<tr><td><input type="checkbox" /></td>'
           for (const key in tableData[index]) {
             if (tableData[index].hasOwnProperty(key)) {
@@ -494,17 +496,17 @@
       }
       oBody.innerHTML = str
       this.changeColor()
-      this.selectAll(0)
+      this.selectAll(false)
     },
     // 鼠标悬停时改变行的颜色
     changeColor() {
       for (const oRow of oRows) {
-        oRow.oldClass = this.className || ''
+        oRow.oldClass = oRow.className || ''
         oRow.onmouseover = function(e) {
           this.className = 'hover-color'
         }
         oRow.onmouseout = function(e) {
-          this.className = this.oldClass
+          this.className = oRow.oldClass
         }
       }
     },
@@ -512,7 +514,7 @@
     sortRows(i) {
       let oRowsArr = Array.from(oRows)
       // 给所有行对应的数组进行排序
-      oRowsArr.sort((a, b) => {
+      oRowsArr.sort(function(a, b) {
         let as = a.cells[i].innerHTML
         let bs = b.cells[i].innerHTML
         if (isNaN(as)) {
@@ -530,40 +532,39 @@
       }
       // 按照最新的顺序，把我们的每一行重新的添加到页面中
       let domFrg = document.createDocumentFragment()
-      oRowsArr.forEach((row) => {
+      oRowsArr.forEach(function(row) {
         domFrg.appendChild(row)
       })
       oBody.appendChild(domFrg)
     },
     // 全选||取消全选
     selectAll(flag) {
-      let oChks = document.querySelectorAll('#table input')
-      Array.from(oChks).forEach((chk, i) => {
+      let oChks = document.querySelectorAll('#table-original input')
+      oChks = [].slice.call(oChks, 1)
+      for (const chk of oChks) {
         chk.checked = flag
         // 给每一行添加点击事件
-        i !== 0 &&
-          (chk.onclick = function() {
-            !this.checked ? (oChk.checked = false) : void 0
-            let tempFlag = true
-            for (let j = 1; j < oChks.length; j++) {
-              // 只要有任何一个取消选中,则跳出循环
-              if (!oChks[j].checked) {
-                tempFlag = false
-                break
-              }
+        chk.onclick = function() {
+          !this.checked ? (oChk.checked = false) : void 0
+          let tempFlag = true
+          for (let i = 0; i < oChks.length; i++) {
+            // 只要有任何一个取消选中,则跳出循环
+            if (!oChks[i].checked) {
+              tempFlag = false
+              break
             }
-            tempFlag && (oChk.checked = true)
-          })
-      })
+          }
+          if (tempFlag) oChk.checked = true
+        }
+      }
     },
   }
   tables.render()
-  for (let i = 0; i < oThs.length; i++) {
+  for (let i = 1; i < oThs.length; i++) {
     // 给表头添加点击事件
-    i !== 0 &&
-      (oThs[i].onclick = () => {
-        tables.sortRows(i)
-      })
+    oThs[i].onclick = function() {
+      tables.sortRows(i)
+    }
   }
   oChk.onclick = function() {
     this.checked ? tables.selectAll(true) : tables.selectAll(false)
@@ -574,7 +575,7 @@
 
 ```html
 <div class="table-wrap">
-  <table id="table">
+  <table id="table-original">
     <thead>
       <tr>
         <th class="w30"><input type="checkbox" /></th>
@@ -659,18 +660,18 @@
       score: 1034,
     },
   ]
-  var oTable = document.querySelector('#table'),
+  var oTable = document.querySelector('#table-original'),
     oBody = oTable.tBodies[0],
     oRows = oBody.rows || [],
-    oThs = document.querySelectorAll('#table th'),
-    oChk = document.querySelector('#table input')
+    oThs = document.querySelectorAll('#table-original th'),
+    oChk = document.querySelector('#table-original input')
   var tables = {
     sort: 'asc',
     // 渲染表格
     render() {
       let str = ''
-      if (tableData && tableData.length > 0) {
-        tableData.forEach((item, index) => {
+      if (tableData && tableData.length) {
+        tableData.forEach(function(item, index) {
           str += '<tr><td><input type="checkbox" /></td>'
           for (const key in tableData[index]) {
             if (tableData[index].hasOwnProperty(key)) {
@@ -682,23 +683,198 @@
       }
       oBody.innerHTML = str
       this.changeColor()
-      this.selectAll(0)
+      this.selectAll(false)
     },
     // 鼠标悬停时改变行的颜色
     changeColor() {
       for (const oRow of oRows) {
-        oRow.oldClass = this.className || ''
+        oRow.oldClass = oRow.className || ''
         oRow.onmouseover = function(e) {
           this.className = 'hover-color'
         }
         oRow.onmouseout = function(e) {
-          this.className = this.oldClass
+          this.className = oRow.oldClass
         }
       }
     },
     // 表格排序
     sortRows(i) {
       let oRowsArr = Array.from(oRows)
+      // 给所有行对应的数组进行排序
+      oRowsArr.sort(function(a, b) {
+        let as = a.cells[i].innerHTML
+        let bs = b.cells[i].innerHTML
+        if (isNaN(as)) {
+          return as.localeCompare(bs)
+        } else {
+          return as - bs
+        }
+      })
+      // 实现升降序处理
+      if (this.sort === 'asc') {
+        oRowsArr.reverse()
+        this.sort = 'desc'
+      } else {
+        this.sort = 'asc'
+      }
+      // 按照最新的顺序，把我们的每一行重新的添加到页面中
+      let domFrg = document.createDocumentFragment()
+      oRowsArr.forEach(function(row) {
+        domFrg.appendChild(row)
+      })
+      oBody.appendChild(domFrg)
+    },
+    // 全选||取消全选
+    selectAll(flag) {
+      let oChks = document.querySelectorAll('#table-original input')
+      oChks = [].slice.call(oChks, 1)
+      for (const chk of oChks) {
+        chk.checked = flag
+        // 给每一行添加点击事件
+        chk.onclick = function() {
+          !this.checked ? (oChk.checked = false) : void 0
+          let tempFlag = true
+          for (let i = 0; i < oChks.length; i++) {
+            // 只要有任何一个取消选中,则跳出循环
+            if (!oChks[i].checked) {
+              tempFlag = false
+              break
+            }
+          }
+          if (tempFlag) oChk.checked = true
+        }
+      }
+    },
+  }
+  tables.render()
+  for (let i = 1; i < oThs.length; i++) {
+    // 给表头添加点击事件
+    oThs[i].onclick = function() {
+      tables.sortRows(i)
+    }
+  }
+  oChk.onclick = function() {
+    this.checked ? tables.selectAll(true) : tables.selectAll(false)
+  }
+</script>
+```
+
+:::
+
+### Vue 实现方式
+
+<table-sort />
+
+::: details 查看代码
+
+```vue
+<template>
+  <div class="table-wrap">
+    <table id="table-vue">
+      <thead>
+        <tr>
+          <th class="w30">
+            <input type="checkbox" v-model="isSelectAll" @click="selectAll(!isSelectAll)" />
+          </th>
+          <th :class="item.class" v-for="(item, index) in tableHead" :key="index" @click="sortRows(index + 1)">
+            {{ item.text }}
+          </th>
+        </tr>
+      </thead>
+      <tbody v-html="tableBody"></tbody>
+    </table>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      tableHead: [
+        { text: '姓名', class: 'w100' },
+        { text: '年龄', class: 'w70' },
+        { text: '邮箱', class: 'w200' },
+        { text: '手机', class: 'w200' },
+        { text: '工资', class: 'w100' },
+      ],
+      isSelectAll: false,
+      tableData: [
+        {
+          name: '用户-1',
+          age: 25,
+          email: '1234567890@qq.com',
+          phone: '13245637823',
+          score: 1340,
+        },
+        {
+          name: '用户-2',
+          age: 23,
+          email: '4123456780@qq.com',
+          phone: '18723456423',
+          score: 1200,
+        },
+        {
+          name: '用户-3',
+          age: 32,
+          email: '4123456890@qq.com',
+          phone: '13800026574',
+          score: 1800,
+        },
+        {
+          name: '用户-4',
+          age: 41,
+          email: '5234567890@qq.com',
+          phone: '13800993302',
+          score: 1034,
+        },
+      ],
+      tableBody: '',
+      sort: 'asc',
+      oTable: null,
+      oBody: null,
+      oRows: null,
+    }
+  },
+  mounted() {
+    this.render()
+  },
+  methods: {
+    // 渲染表格
+    render() {
+      if (this.tableData && this.tableData.length) {
+        this.tableData.forEach((item, index) => {
+          this.tableBody += '<tr><td><input type="checkbox" /></td>'
+          for (const key in this.tableData[index]) {
+            if (this.tableData[index].hasOwnProperty(key)) {
+              this.tableBody += `<td>${this.tableData[index][key]}</td>`
+            }
+          }
+          this.tableBody += '</tr>'
+        })
+      }
+      this.oTable = document.querySelector('#table-vue')
+      this.oBody = this.oTable.tBodies[0]
+      this.oRows = this.oBody.rows || []
+      this.changeColor()
+      this.selectAll(this.isSelectAll)
+    },
+    // 鼠标悬停时改变行的颜色
+    changeColor() {
+      this.$nextTick(() => {
+        for (const oRow of this.oRows) {
+          oRow.oldClass = oRow.className || ''
+          oRow.onmouseover = (e) => {
+            oRow.className = 'hover-color'
+          }
+          oRow.onmouseout = (e) => {
+            oRow.className = oRow.oldClass
+          }
+        }
+      })
+    },
+    // 表格排序
+    sortRows(i) {
+      let oRowsArr = Array.from(this.oRows)
       // 给所有行对应的数组进行排序
       oRowsArr.sort((a, b) => {
         let as = a.cells[i].innerHTML
@@ -721,42 +897,38 @@
       oRowsArr.forEach((row) => {
         domFrg.appendChild(row)
       })
-      oBody.appendChild(domFrg)
+      this.oBody.appendChild(domFrg)
     },
     // 全选||取消全选
     selectAll(flag) {
-      let oChks = document.querySelectorAll('#table input')
-      Array.from(oChks).forEach((chk, i) => {
-        chk.checked = flag
-        // 给每一行添加点击事件
-        i !== 0 &&
-          (chk.onclick = function() {
-            !this.checked ? (oChk.checked = false) : void 0
+      this.$nextTick(() => {
+        let oChks = document.querySelectorAll('#table-vue input')
+        oChks = [].slice.call(oChks, 1)
+        for (const chk of oChks) {
+          chk.checked = flag
+          // 给每一行添加点击事件
+          chk.onclick = (e) => {
+            !e.target.checked ? (this.isSelectAll = false) : void 0
             let tempFlag = true
-            for (let j = 1; j < oChks.length; j++) {
+            for (let i = 0; i < oChks.length; i++) {
               // 只要有任何一个取消选中,则跳出循环
-              if (!oChks[j].checked) {
+              if (!oChks[i].checked) {
                 tempFlag = false
                 break
               }
             }
-            tempFlag && (oChk.checked = true)
-          })
+            if (tempFlag) this.isSelectAll = true
+          }
+        }
       })
     },
-  }
-  tables.render()
-  for (let i = 0; i < oThs.length; i++) {
-    // 给表头添加点击事件
-    i !== 0 &&
-      (oThs[i].onclick = () => {
-        tables.sortRows(i)
-      })
-  }
-  oChk.onclick = function() {
-    this.checked ? tables.selectAll(true) : tables.selectAll(false)
-  }
+  },
+}
 </script>
+
+<style scoped>
+/* 直接共享父级页面的css了 */
+</style>
 ```
 
 :::

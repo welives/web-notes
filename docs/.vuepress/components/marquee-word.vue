@@ -56,7 +56,7 @@ export default {
     this.autoAni()
   },
   methods: {
-    showMarquee: function() {
+    showMarquee() {
       this.animate = true
       setTimeout(() => {
         this.marqueeList.push(this.marqueeList[0])
