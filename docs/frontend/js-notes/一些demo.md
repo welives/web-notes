@@ -35,7 +35,7 @@
     function animate() {
       list.firstElementChild.style.marginTop = -li_h + 'px'
       let firstEl = list.firstElementChild
-      setTimeout(() => {
+      setTimeout(function() {
         firstEl.style.marginTop = '0px'
         list.appendChild(firstEl)
       }, options.movetime)
@@ -88,7 +88,7 @@
     function animate() {
       list.firstElementChild.style.marginTop = -li_h + 'px'
       let firstEl = list.firstElementChild
-      setTimeout(() => {
+      setTimeout(function() {
         firstEl.style.marginTop = '0px'
         list.appendChild(firstEl)
       }, options.movetime)
@@ -481,8 +481,7 @@
     // 渲染表格
     render() {
       let str = ''
-      tableData &&
-        tableData.length > 0 &&
+      if (tableData && tableData.length > 0) {
         tableData.forEach((item, index) => {
           str += '<tr><td><input type="checkbox" /></td>'
           for (const key in tableData[index]) {
@@ -492,6 +491,7 @@
           }
           str += '</tr>'
         })
+      }
       oBody.innerHTML = str
       this.changeColor()
       this.selectAll(0)
@@ -565,7 +565,6 @@
         tables.sortRows(i)
       })
   }
-    console.log(oChk)
   oChk.onclick = function() {
     this.checked ? tables.selectAll(true) : tables.selectAll(false)
   }
@@ -670,8 +669,7 @@
     // 渲染表格
     render() {
       let str = ''
-      tableData &&
-        tableData.length > 0 &&
+      if (tableData && tableData.length > 0) {
         tableData.forEach((item, index) => {
           str += '<tr><td><input type="checkbox" /></td>'
           for (const key in tableData[index]) {
@@ -681,6 +679,7 @@
           }
           str += '</tr>'
         })
+      }
       oBody.innerHTML = str
       this.changeColor()
       this.selectAll(0)
@@ -754,7 +753,6 @@
         tables.sortRows(i)
       })
   }
-  console.log(oChk)
   oChk.onclick = function() {
     this.checked ? tables.selectAll(true) : tables.selectAll(false)
   }
